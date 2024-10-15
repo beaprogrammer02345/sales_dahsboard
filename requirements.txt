@@ -2,7 +2,6 @@ altair==5.4.1
 matplotlib==3.6.3
 numpy==1.23.5
 pandas==1.5.3
-Pillow==9.5.0
 Pillow==10.4.0
 plotly==5.24.0
 prophet==1.1.5
