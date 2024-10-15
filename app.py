@@ -45,6 +45,9 @@ hide_st_style = """
         margin-top: 0px;  /* Remove margin at the top */
         padding-top: 0px;  /* Remove padding at the top */
     }
+    .container{
+        width: 80%; /* instead of a fixed width */
+    }
     </style>
     """
 st.markdown(hide_st_style, unsafe_allow_html=True)
@@ -162,6 +165,9 @@ st.markdown("""
 [data-testid="stMetric"] {
     animation: pulse 1.5s infinite; /* Subtle pulsing animation */
 }
+.container{
+     width:80%;
+}        
 
 </style>
 """, unsafe_allow_html=True)
@@ -231,7 +237,7 @@ def custom_metric(label, value, percentage_change, icon_color="#CB3CFF", label_c
         # Convert the modified image to base64
         image_base64 = image_to_base64(image)
         # Create the img tag for the HTML
-        img_tag = f'<img src="data:image/png;base64,{image_base64}" style="width: 50px; height: 50px; margin-right: 15px;">'
+        img_tag = f'<img src="data:image/png;base64,{image_base64}" style="width: 25px;">'
     else:
         img_tag = ''
     # Initialize background_image_base64
@@ -250,7 +256,6 @@ def custom_metric(label, value, percentage_change, icon_color="#CB3CFF", label_c
                 padding: 10px;
                 border-radius: 10px;
                 display: flex;
-                align-items: center;
                 overflow: hidden;
             }}
             .metric-container::before {{
@@ -267,26 +272,42 @@ def custom_metric(label, value, percentage_change, icon_color="#CB3CFF", label_c
                 z-index: -1; /* Ensure it's behind the content */
             }}
             .metric-content {{
-                position: relative; /* Make sure content is above the background */
+                 /* Make sure content is above the background */
                 z-index: 1; /* Ensure it appears above the background image */
             }}
+            @media (max-width: 868px) {{
+                .metric-container {{
+                    flex-direction: column;  /* Stack KPI components on smaller screens */
+                    align-items: center; /* Center align items */
+                }}
+
+                .metric-content {{
+                    text-align: center; /* Center align text */
+                }}    
+            }}
+
+            @media (min-width: 769px) {{
+                .metric-container {{
+                    flex-direction: row; /* Keep KPIs in a row on larger screens */
+                }}
+            }}
+        
         </style>
 
-        <div class="metric-container">
-            <div  class="metric-content" style="flex:1;display: flex; flex-direction: column; justify-content: center;margin-left:18px">
-                <p style="color:white; font-size:30px; margin: 0; padding: 0;">
+        <div class="metric-container" style="flex:1;display:flex;flex-direction:column;justify-content:left;>
+            <div  class="metric-content">
+                <p style="color:white; font-size:25px; margin-left:8px;">
                     <span style="color:{icon_color}; font-size:26px;">{label[:1]}</span>{label[1:]}
                 </p>
-                <div style="display: flex; align-items: center; margin-top: 8px;">
-                    <h2 style="color:#fafafa; margin: 0; font-size:28px;">{value}</h2>
-                    <span style="color:{change_color}; font-size:22px; margin-left: 10px;">{percentage_change:.2f}%</span>
+                <div style="display: flex;flex-direction: row;align-items:center;justify-content:space-around;">
+                    <h2 style="color:#fafafa;  font-size:24px;">{value}</h2>
+                    <h4 style="color:{change_color}; font-size:17px; ">{percentage_change:.2f}%</h4>
+                    <div style="background-color: #0075FF;margin-top:-15px;height:50px;width:50px; border-radius: 8px; padding:15px; display: inline-flex; align-items: center;">
+                        {img_tag}
+                    </div>
                 </div>
             </div>
-            <div style="flex-shrink: 0; text-align: right; margin-right:10px">
-                <div style="background-color: #0075FF; border-radius: 10px; padding: 10px; display: inline-flex; align-items: center;">
-                    {img_tag}
-                </div>
-            </div>
+    
         </div>
         """, unsafe_allow_html=True)
 
