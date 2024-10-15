@@ -148,7 +148,6 @@ python-json-logger==2.0.7
 python-slugify==8.0.4
 pytz==2023.3
 PyWavelets==1.7.0
-pywin32==306
 pywinpty==2.0.10
 PyYAML==6.0
 pyzmq==25.0.2
